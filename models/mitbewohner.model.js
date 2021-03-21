@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const BewerberSchema = mongoose.Schema({
+const MitbewohnerSchema = mongoose.Schema({
         vorname: {
             type: String,
             required: true
@@ -8,9 +8,15 @@ const BewerberSchema = mongoose.Schema({
         nachname: {
             type: String,
         },
+        alter: {
+            type: Number,
+        },
+        bilderUrls: [
+            {type: String}
+        ]
     },
     {
         timestamps: true
     });
 
-module.exports = mongoose.model("Bewerber", BewerberSchema);
+module.exports = mongoose.model("Mitbewohner", MitbewohnerSchema);
