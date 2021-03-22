@@ -19,4 +19,4 @@ const MitbewohnerSchema = mongoose.Schema({
         timestamps: true
     });
 
-module.exports = mongoose.model("Mitbewohner", MitbewohnerSchema);
+module.exports = mongoose.model("Mitbewohners", MitbewohnerSchema);

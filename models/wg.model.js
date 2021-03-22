@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const MatchingKriterien = require("./matching_kriterien.model");
+const Mitbewohner = require("./mitbewohner.model");
 
 const WgSchema = mongoose.Schema({
         strasse: {
@@ -11,11 +13,11 @@ const WgSchema = mongoose.Schema({
         },
         ort: {
             type: String,
-            required: true
+            // required: true
         },
         plz: {
             type: String,
-            required: true
+            // required: true
         },
         beschreibung: {
             type: String,
@@ -23,11 +25,10 @@ const WgSchema = mongoose.Schema({
         bilderUrls: [
             {type: String}
         ],
-        mitbewohner: [
-            {type: mongoose.Schema.Types.ObjectId, ref: "Mitbewohner"}
-        ],
+        mitbewohner:
+            [Mitbewohner.schema],
         matchingKriterien:
-            {type: mongoose.Schema.Types.ObjectId, ref: "MatchingKriterien"}
+            [MatchingKriterien.schema]
     },
     {
         timestamps: true

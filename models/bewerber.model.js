@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const MatchingKriterien = require("./matching_kriterien.model");
 
 const BewerberSchema = mongoose.Schema({
         vorname: {
@@ -8,9 +9,11 @@ const BewerberSchema = mongoose.Schema({
         nachname: {
             type: String,
         },
+        matchingKriterien:
+            [MatchingKriterien.schema]
     },
     {
         timestamps: true
     });
 
-module.exports = mongoose.model("Bewerber", BewerberSchema);
+module.exports = mongoose.model("Bewerbers", BewerberSchema);

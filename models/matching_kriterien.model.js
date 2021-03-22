@@ -11,7 +11,7 @@ const MatchingKriterienSchema = mongoose.Schema({
         alter: [
             {
                 type: Number,
-                required: true
+                // required: true
             }
         ],
         raucher: [
@@ -24,32 +24,25 @@ const MatchingKriterienSchema = mongoose.Schema({
         ernaehrung: [
             {
                 type: String,
-                required: true,
+                // required: true,
                 enum: ["vegan", "vegetarisch", "omnivor"]
             }
         ],
         taetigkeit: [
             {
                 type: String,
-                required: true,
+                // required: true,
                 enum: ["Student", "Schüler", "Azubi", "Praktikant", "arbeitslos", "berufstätig"]
-            }
-        ],
-        geschlecht: [
-            {
-                type: String,
-                required: true,
-                enum: ["m", "w", "d"]
             }
         ],
         politischeGesinnung: [
             {
                 type: String,
-                required: true,
+                // required: true,
                 enum: ["links", "rechts", "konservativ", "grün", "liberal", "unpolitisch"]
             }
         ],
-        hobbies: {
+        hobbies: [{
             brettspiele: {
                 type: Number
             },
@@ -71,8 +64,8 @@ const MatchingKriterienSchema = mongoose.Schema({
             musizieren: {
                 type: Number
             }
-        },
-        interessen: {
+        }],
+        interessen: [{
             politik: {
                 type: Number
             },
@@ -88,15 +81,15 @@ const MatchingKriterienSchema = mongoose.Schema({
             sport: {
                 type: Number
             }
-        }
+        }]
     },
     {
         timestamps: true
     });
 
-module.exports = mongoose.model("MatchingKriterien", MatchingKriterienSchema);
+module.exports = mongoose.model("MatchingKriteriens", MatchingKriterienSchema);
 
-require('mongoose-schema-jsonschema')(mongoose);
-const jsonSchema = MatchingKriterienSchema.jsonSchema();
-
-console.dir(jsonSchema, {depth: null});
+//generate JSON schema from model
+// require('mongoose-schema-jsonschema')(mongoose);
+// const jsonSchema = MatchingKriterienSchema.jsonSchema();
+// console.dir(jsonSchema, {depth: null});

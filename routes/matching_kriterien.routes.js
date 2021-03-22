@@ -1,15 +1,22 @@
 const express = require("express");
 const router = express();
-const MatchingKriterien = require("../models/matching_kriterien.model");
+const matchingKriterien = require("../controllers/matching_kriterien.controller");
+const match = require("../controllers/match.controller");
 
-router.post("/", async (req, res) => {
-    const matchingKriterien = new MatchingKriterien(req.body);
-    try {
-        const savedMatchingKriterien = await matchingKriterien.save()
-        res.json(savedMatchingKriterien);
-    } catch (err) {
-        res.json({message: err});
-    }
-});
+//Set or update MatchingKriterien of a Bewerber
+router.post("/bewerber/:bewerberId", matchingKriterien.createMatchingKriterienBew);
+
+//Set or update MatchingKriterien of a Bewerber
+router.patch("/bewerber/:bewerberId", matchingKriterien.updateMatchingKriterienBew);
+
+//Set or update MatchingKriterien of a WG
+router.post("/wg/:wgId", matchingKriterien.createMatchingKriterienWg);
+
+//Set or update MatchingKriterien of a WG
+router.patch("/wg/:wgId", matchingKriterien.updateMatchingKriterienWg);
+
+
+router.get("/matches/:bewerberId", match.doMatching);
+
 
 module.exports = router;
