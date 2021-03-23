@@ -5,13 +5,14 @@ const MatchingKriterienSchema = mongoose.Schema({
             {
                 type: String,
                 required: true,
-                enum: ["m", "w", "d"]
+                enum: ["m", "w", "d"],
+                // validate: [(v) => v.length > 0, "No geschlecht"]
             }
         ],
         alter: [
             {
                 type: Number,
-                // required: true
+                required: true
             }
         ],
         raucher: [
@@ -24,72 +25,86 @@ const MatchingKriterienSchema = mongoose.Schema({
         ernaehrung: [
             {
                 type: String,
-                // required: true,
+                required: true,
                 enum: ["vegan", "vegetarisch", "omnivor"]
             }
         ],
         taetigkeit: [
             {
                 type: String,
-                // required: true,
+                required: true,
                 enum: ["Student", "Schüler", "Azubi", "Praktikant", "arbeitslos", "berufstätig"]
             }
         ],
-        politischeGesinnung: [
+        politischeGesinnung:
             {
-                type: String,
-                // required: true,
+                type: [String],
+                required: true,
+                // validate: [(v) => v.length > 0, "No pG"],
                 enum: ["links", "rechts", "konservativ", "grün", "liberal", "unpolitisch"]
             }
-        ],
+        ,
         hobbies: [{
             brettspiele: {
-                type: Number
+                type: Number,
+                required: true
             },
             videospiele: {
-                type: Number
+                type: Number,
+                required: true
             },
             lesen: {
-                type: Number
+                type: Number,
+                required: true
             },
             sport: {
-                type: Number
+                type: Number,
+                required: true
             },
             reisen: {
-                type: Number
+                type: Number,
+                required: true
             },
             feiernGehen: {
-                type: Number
+                type: Number,
+                required: true
             },
             musizieren: {
-                type: Number
+                type: Number,
+                required: true
             }
         }],
         interessen: [{
             politik: {
-                type: Number
+                type: Number,
+                required: true
             },
             kultur: {
-                type: Number
+                type: Number,
+                required: true
             },
             naturwisschenschaften: {
-                type: Number
+                type: Number,
+                required: true
             },
             technik: {
-                type: Number
+                type: Number,
+                required: true
             },
             sport: {
-                type: Number
+                type: Number,
+                required: true
             }
         }]
     },
     {
         timestamps: true
-    });
+    }
+);
 
 module.exports = mongoose.model("MatchingKriteriens", MatchingKriterienSchema);
 
-//generate JSON schema from model
+// generate JSON schema from model
 // require('mongoose-schema-jsonschema')(mongoose);
 // const jsonSchema = MatchingKriterienSchema.jsonSchema();
 // console.dir(jsonSchema, {depth: null});

@@ -3,20 +3,20 @@ const router = express();
 const matchingKriterien = require("../controllers/matching_kriterien.controller");
 const match = require("../controllers/match.controller");
 
-//Set or update MatchingKriterien of a Bewerber
-router.post("/bewerber/:bewerberId", matchingKriterien.createMatchingKriterienBew);
+//Create MatchingKriterien of a Bewerber and initiate matching
+router.post("/bewerber/:bewerberId", matchingKriterien.createMatchingKriterienBew, match.doMatchingBew);
 
-//Set or update MatchingKriterien of a Bewerber
-router.patch("/bewerber/:bewerberId", matchingKriterien.updateMatchingKriterienBew);
+//Update MatchingKriterien of a Bewerber and initiate matching
+router.patch("/bewerber/:bewerberId", matchingKriterien.updateMatchingKriterienBew, match.doMatchingBew);
 
-//Set or update MatchingKriterien of a WG
+//Create MatchingKriterien of a WG and initiate matching
 router.post("/wg/:wgId", matchingKriterien.createMatchingKriterienWg);
 
-//Set or update MatchingKriterien of a WG
+//Update MatchingKriterien of a WG and initiate matching
 router.patch("/wg/:wgId", matchingKriterien.updateMatchingKriterienWg);
 
-
-router.get("/matches/:bewerberId", match.doMatching);
+//dev
+router.post("/matches/:bewerberId", match.doMatchingBew);
 
 
 module.exports = router;

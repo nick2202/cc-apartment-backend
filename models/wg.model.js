@@ -9,7 +9,7 @@ const WgSchema = mongoose.Schema({
         },
         hausnummer: {
             type: String,
-            required: true
+            // required: true
         },
         ort: {
             type: String,
