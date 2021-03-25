@@ -1,46 +1,47 @@
 const mongoose = require("mongoose");
 
 const MatchingKriterienSchema = mongoose.Schema({
-        geschlecht: [
+        geschlecht:
             {
-                type: String,
+                type: [String],
+                default: undefined,
                 required: true,
-                enum: ["m", "w", "d"],
-                // validate: [(v) => v.length > 0, "No geschlecht"]
+                validate: [(v) => v.length > 0, "Geschlecht is required"],
+                enum: ["m", "w", "d"]
             }
-        ],
-        alter: [
+        ,
+        alter:
             {
-                type: Number,
+                type: [Number],
                 required: true
             }
-        ],
-        raucher: [
+        ,
+        raucher:
             {
-                type: String,
+                type: [String],
                 required: true,
                 enum: ["Raucher", "Nichtraucher"]
             }
-        ],
-        ernaehrung: [
+        ,
+        ernaehrung:
             {
-                type: String,
+                type: [String],
                 required: true,
                 enum: ["vegan", "vegetarisch", "omnivor"]
             }
-        ],
-        taetigkeit: [
+        ,
+        taetigkeit:
             {
-                type: String,
+                type: [String],
                 required: true,
                 enum: ["Student", "Schüler", "Azubi", "Praktikant", "arbeitslos", "berufstätig"]
             }
-        ],
+        ,
         politischeGesinnung:
             {
                 type: [String],
                 required: true,
-                // validate: [(v) => v.length > 0, "No pG"],
+                validate: [(v) => v.length > 0, "No pG"],
                 enum: ["links", "rechts", "konservativ", "grün", "liberal", "unpolitisch"]
             }
         ,

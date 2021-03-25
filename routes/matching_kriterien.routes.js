@@ -10,10 +10,10 @@ router.post("/bewerber/:bewerberId", matchingKriterien.createMatchingKriterienBe
 router.patch("/bewerber/:bewerberId", matchingKriterien.updateMatchingKriterienBew, match.doMatchingBew);
 
 //Create MatchingKriterien of a WG and initiate matching
-router.post("/wg/:wgId", matchingKriterien.createMatchingKriterienWg);
+router.post("/wg/:wgId", matchingKriterien.createMatchingKriterienWg, match.doMatchingWg);
 
 //Update MatchingKriterien of a WG and initiate matching
-router.patch("/wg/:wgId", matchingKriterien.updateMatchingKriterienWg);
+router.patch("/wg/:wgId", matchingKriterien.updateMatchingKriterienWg, match.doMatchingWg);
 
 //dev
 router.post("/matches/:bewerberId", match.doMatchingBew);

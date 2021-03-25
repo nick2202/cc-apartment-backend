@@ -14,13 +14,15 @@ app.get("/", (req, res) => {
     res.status(200).json({message: "Home"});
 });
 
-const BewerberRoute = require("./routes/bewerber.routes");
-const KriterienRoute = require("./routes/matching_kriterien.routes");
-const WgRoute = require("./routes/wg.routes");
+const bewerberRoute = require("./routes/bewerber.routes");
+const wgRoute = require("./routes/wg.routes");
+const kriterienRoute = require("./routes/matching_kriterien.routes");
+const matchRoute = require("./routes/match.routes");
 
-app.use("/bewerber", BewerberRoute);
-app.use("/kriterien", KriterienRoute);
-app.use("/wg", WgRoute);
+app.use("/bewerber", bewerberRoute);
+app.use("/wg", wgRoute);
+app.use("/kriterien", kriterienRoute);
+app.use("/match", matchRoute);
 
 
 mongoose.connect(

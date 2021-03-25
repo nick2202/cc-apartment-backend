@@ -10,6 +10,7 @@ exports.createMatchingKriterienBew = (async (req, res, next) => {
             {_id: req.params.bewerberId},
             {matchingKriterien: matchingKriterien}
         );
+        res.locals.kriterien = "MatchingKriterien created successfully!";
         next();
     } catch (err) {
         res.json({message: err});
@@ -23,6 +24,7 @@ exports.createMatchingKriterienWg = (async (req, res, next) => {
             {_id: req.params.wgId},
             {matchingKriterien: matchingKriterien}
         );
+        res.locals.kriterien = "MatchingKriterien created successfully!";
         next();
     } catch (err) {
         res.json({message: err});
@@ -37,9 +39,10 @@ exports.updateMatchingKriterienBew = (async (req, res, next) => {
         mk = await bewerber.matchingKriterien[0];
         await mk.set(req.body);
         bewerber.save();
+        res.locals.kriterien = "MatchingKriterien updated successfully!";
         next();
     } catch (err) {
-        res.json({message: err});
+        res.status(500).json({message: "Updating of MatchingKriterien failed"});
     }
 });
 
@@ -51,8 +54,7 @@ exports.updateMatchingKriterienWg = (async (req, res, next) => {
         mk = await wg.matchingKriterien[0];
         await mk.set(req.body);
         wg.save();
-        console.log(mk);
-        res.json(wg);
+        res.locals.kriterien = "MatchingKriterien updated successfully!";
         next();
     } catch (err) {
         res.json({message: err});
