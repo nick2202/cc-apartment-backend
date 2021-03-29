@@ -59,8 +59,8 @@ exports.doMatchingWg = async (req, res) => {
 
 exports.getMatchesBew = async (req, res) => {
     try {
-        const match = await Match.find({bewerber: req.params.bewerberId});
-        res.json(match);
+        const matches = await Match.find({bewerber: req.params.bewerberId});
+        res.json(matches);
     } catch (err) {
         res.json({message: err});
     }
@@ -68,8 +68,25 @@ exports.getMatchesBew = async (req, res) => {
 
 exports.getMatchesWg = async (req, res) => {
     try {
-        const match = await Match.find({wg: req.params.wgId});
-        res.json(match);
+        const matches = await Match.find({wg: req.params.wgId});
+        res.json(matches);
+    } catch (err) {
+        res.json({message: err});
+    }
+};
+
+exports.getMatchingBewWg = async (req, res) => {
+    try {
+        var matches;
+        matches = await Match.find({wg: req.params.wgId});
+        var matchIds = [];
+        await matches.forEach(e => {
+            matchIds.push(e.bewerber)
+        })
+        console.log(matches)
+        console.log(matchIds)
+        const bews = await Bewerber.find({"_id": {$in: matchIds}})
+        res.json(bews);
     } catch (err) {
         res.json({message: err});
     }

@@ -1,8 +1,11 @@
 const Bewerber = require("../models/bewerber.model");
 
-exports.findAll = (async (req, res) => {
+exports.findMany = (async (req, res) => {
     try {
-        const bewerber = await Bewerber.find();
+        const bewerber = await Bewerber.find({
+            "_id": {$in: [req.body]}
+        }
+        );
         res.json(bewerber);
     } catch (err) {
         res.json({message: err});

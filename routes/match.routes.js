@@ -9,10 +9,13 @@ router.post("/bewerber/:bewerberId", match.doMatchingBew);
 router.post("/wg/:wgId", match.doMatchingWg);
 
 //Get all matches for a Bewerber above a certain percentage (ex. 0.5)
-router.get("/bewerber/:bewerberId/:faktor", match.getMatchesBew);
+router.get("/bewerber/:bewerberId", match.getMatchesBew);
 
 //Get all matches for a WG above a certain percentage (ex. 0.5)
-router.get("/wg/:wgId/:faktor", match.getMatchesWg);
+router.get("/wg/:wgId", match.getMatchesWg);
+
+//Get all Bewerber which match a certain WG
+router.get("/wg/getBews/:wgId", match.getMatchingBewWg);
 
 
 module.exports = router;

@@ -2,8 +2,8 @@ const express = require("express");
 const router = express();
 const bewerber = require("../controllers/bewerber.controller");
 
-//Get all
-router.get("/", bewerber.findAll);
+//Get many
+router.get("/", bewerber.findMany);
 
 //Get one
 router.get("/:bewerberId", bewerber.findOne);
