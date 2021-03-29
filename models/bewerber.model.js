@@ -8,9 +8,17 @@ const BewerberSchema = mongoose.Schema({
         },
         nachname: {
             type: String,
+            required: true
         },
+        beschreibung: {
+            type: String,
+        },
+        bilderUrls: [
+            {type: String}
+        ],
         matchingKriterien:
             [MatchingKriterien.schema]
+
     },
     {
         timestamps: true

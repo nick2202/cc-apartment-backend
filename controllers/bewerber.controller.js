@@ -31,6 +31,7 @@ exports.create = (async (req, res) => {
     const bewerber = new Bewerber(req.body);
     try {
         const savedBewerber = await bewerber.save()
+        res.setHeader('content-type', 'application/json');
         res.json(savedBewerber);
     } catch (err) {
         res.json({message: err});

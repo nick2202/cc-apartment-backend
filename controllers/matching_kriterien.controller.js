@@ -10,8 +10,9 @@ exports.createMatchingKriterienBew = (async (req, res, next) => {
             {_id: req.params.bewerberId},
             {matchingKriterien: matchingKriterien}
         );
-        res.locals.kriterien = "MatchingKriterien created successfully!";
-        next();
+        res.json(savedBewerber);
+        // res.locals.kriterien = "MatchingKriterien created successfully!";
+        // next();
     } catch (err) {
         res.json({message: err});
     }
@@ -24,8 +25,9 @@ exports.createMatchingKriterienWg = (async (req, res, next) => {
             {_id: req.params.wgId},
             {matchingKriterien: matchingKriterien}
         );
-        res.locals.kriterien = "MatchingKriterien created successfully!";
-        next();
+        // res.locals.kriterien = "MatchingKriterien created successfully!";
+        // next();
+        res.json(savedWg);
     } catch (err) {
         res.json({message: err});
     }
