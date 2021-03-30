@@ -1,4 +1,4 @@
-Git -> Clone Project -> $npm install -> §npm start
+Git -> Clone Project -> $npm install -> $npm start
 
 
 
