@@ -1,3 +1,7 @@
+Git -> Clone Project -> $npm install -> §npm start
+
+
+
 Example request (POST Bewerber MatchingKriterien):
 
 
