@@ -1,5 +1,7 @@
 Git -> Clone Project -> $npm install -> $npm start
 
+create config/.env in root dir and set Port and MongoDB authentication
+
 
 
 Example request (POST Bewerber MatchingKriterien):
