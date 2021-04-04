@@ -13,7 +13,7 @@ router.patch("/bewerber/:bewerberId", matchingKriterien.updateMatchingKriterienB
 router.post("/wg/:wgId", matchingKriterien.createMatchingKriterienWg);
 
 //Update MatchingKriterien of a WG and initiate matching
-router.patch("/wg/:wgId", matchingKriterien.updateMatchingKriterienWg, match.doMatchingWg);
+router.patch("/wg/:wgId", matchingKriterien.updateMatchingKriterienWg);
 
 //dev
 router.post("/matches/:bewerberId", match.doMatchingBew);

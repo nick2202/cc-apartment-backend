@@ -33,7 +33,7 @@ Example request (POST Bewerber MatchingKriterien):
     "interessen": [{
         "politik": 1,
         "kultur": 1,
-        "naturwisschenschaften": 1,
+        "naturwissenschaften": 1,
         "technik": 1,
         "sport": 1
     }]

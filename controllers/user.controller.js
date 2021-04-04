@@ -1,35 +1,85 @@
 const Userm = require("../models/user.model");
-const Usert = require("../models/usertype.model");
+const Wg = require("../models/wg.model");
+const Bewerber = require("../models/bewerber.model");
 
 const Realm = require("realm");
 const app = new Realm.App({ id: "cc-apartment-cgfxu" });
 
-exports.register = (async (req, res) => {
+exports.registerBewerber = (async (req, res) => {
     try {
+        console.log("aa")
         const userm = new Userm(req.body);
+        console.log(userm)
+        await app.emailPasswordAuth.registerUser(userm.email, userm.password);
 
-        await app.emailPasswordAuth.registerUser(userm.params.email, userm.params.password);
+        const updatedWg = await Bewerber.updateOne(
+            {_id: req.params.wgId},
+            {userId: userm._id}
+        );
 
-        const userid = app.currentUser.id
-
-        const usert = CreateUsertype(userid,req);
-
-        res.json(usert);
+        res.json(userm);
     } catch (err) {
         res.json({message: err});
     }
 });
 
-exports.login = (async(req,res) => {
+exports.registerWg = (async (req, res) => {
+    try {
+        console.log("aa")
+        const userm = new Userm(req.body);
+        console.log(userm)
+        console.log(req.params.wgId)
+        const registeredUser = await app.emailPasswordAuth.registerUser(userm.email, userm.password);
+        const credentials = Realm.Credentials.emailPassword(userm.email, userm.password);
+        const loggedInUser = await app.logIn(credentials);
+        const id = app.currentUser.id;
+
+        const updatedWg = await Wg.updateOne(
+            {_id: req.params.wgId},
+            {userId: id}
+        );
+        res.json({
+            user: id,
+            wgId: req.params.wgId,
+            updatedWg: updatedWg
+        });
+    } catch (err) {
+        res.json({message: err});
+    }
+});
+
+exports.loginBewerber = (async (req,res) => {
     try {
         const userm = new Userm(req.body);
 
-        const credentials = Realm.Credentials.emailPassword(userm.params.email,userm.params.password);
+        const credentials = Realm.Credentials.emailPassword(userm.email, userm.password);
         const user = await app.logIn(credentials);
+        const token = app.currentUser.accessToken;
+        console.log(token)
+        const bew = await Bewerber.find({userId: userId})
+        console.log(bew._id)
+            Realm.
 
-        const userT = await GetUsertype(user.id);
+        res.json({token: token});
+    } catch (err) {
+        res.json({message: err});
+    }
+});
 
-        res.json(userT);
+exports.loginWg = (async (req,res) => {
+    try {
+        const userm = new Userm(req.body);
+
+        const credentials = Realm.Credentials.emailPassword(userm.email, userm.password);
+        const user = await app.logIn(credentials);
+        const userId = app.currentUser.id
+        const token = app.currentUser.accessToken;
+        console.log(token)
+        console.log(userId)
+        const wg = await Wg.find({userId: userId})
+        console.log(wg._id)
+
+        res.json({token: token});
     } catch (err) {
         res.json({message: err});
     }
@@ -46,26 +96,5 @@ exports.logout = (async(req,res) => {
     }
 });
 
-CreateUsertype = (async(userid,req) => {
-    try{
-        const userm = new Userm(req.body);
-        const userType = new Usert({$set: {uid:userid,
-                                               type:userm.params.type}});
-        await userType.save()
-        return userType;
-    }catch(err){
-
-    }
-});
-
-GetUsertype = (async(userid) => {
-    try{
-        var userT = await Usert.findById(userid);
-        userT = new Usert(userT);
-        return userT;
-    }catch(err){
-
-    }
-});
 
 

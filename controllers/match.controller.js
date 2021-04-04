@@ -25,7 +25,7 @@ exports.doMatchingBew = (async (req, res) => {
             "matchingKriterien.politischeGesinnung": bew.matchingKriterien[0].politischeGesinnung[0]
         });
         await calcFaktor(bew, wgs, "bewerber", "wg")
-        res.json(res.locals.kriterien + "   Number of matches: " + wgs.length);
+        res.json("Number of matches: " + wgs.length);
     } catch (err) {
         res.json({message: err});
     }
@@ -51,7 +51,7 @@ exports.doMatchingWg = async (req, res) => {
             "matchingKriterien.politischeGesinnung": {$in: wg.matchingKriterien[0].politischeGesinnung}
         });
         await calcFaktor(wg, bews, "wg", "bewerber");
-        res.json(res.locals.kriterien + "   Number of matches: " + bews.length);
+        res.json("Number of matches: " + bews.length);
     } catch (err) {
         res.json({message: err});
     }
@@ -110,7 +110,7 @@ const calcFaktor = (entity, listWithMatches, keyEntity, keyListWithMatches) => {
         let sumInteressen =
             Math.abs(entity.matchingKriterien[0].interessen[0].politik - listWithMatches[i].matchingKriterien[0].interessen[0].politik) +
             Math.abs(entity.matchingKriterien[0].interessen[0].kultur - listWithMatches[i].matchingKriterien[0].interessen[0].kultur) +
-            Math.abs(entity.matchingKriterien[0].interessen[0].naturwisschenschaften - listWithMatches[i].matchingKriterien[0].interessen[0].naturwisschenschaften) +
+            Math.abs(entity.matchingKriterien[0].interessen[0].naturwissenschaften - listWithMatches[i].matchingKriterien[0].interessen[0].naturwissenschaften) +
             Math.abs(entity.matchingKriterien[0].interessen[0].technik - listWithMatches[i].matchingKriterien[0].interessen[0].technik) +
             Math.abs(entity.matchingKriterien[0].interessen[0].sport - listWithMatches[i].matchingKriterien[0].interessen[0].sport);
 
@@ -122,4 +122,4 @@ const calcFaktor = (entity, listWithMatches, keyEntity, keyListWithMatches) => {
         });
         const savedMatch = match.save();
     }
-}
+};

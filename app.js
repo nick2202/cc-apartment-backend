@@ -18,11 +18,13 @@ const bewerberRoute = require("./routes/bewerber.routes");
 const wgRoute = require("./routes/wg.routes");
 const kriterienRoute = require("./routes/matching_kriterien.routes");
 const matchRoute = require("./routes/match.routes");
+const userRoute = require("./routes/user.routes");
 
 app.use("/bewerber", bewerberRoute);
 app.use("/wg", wgRoute);
 app.use("/kriterien", kriterienRoute);
 app.use("/match", matchRoute);
+app.use("/user", userRoute);
 
 
 mongoose.connect(

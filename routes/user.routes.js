@@ -3,10 +3,14 @@ const router = express();
 
 const userc = require("../controllers/user.controller");
 
-router.patch("/login", userc.login);
+router.post("/login/bewerber", userc.loginBewerber);
 
-router.patch("/register", userc.register);
+router.post("/register/bewerber/:bewId", userc.registerBewerber);
 
-router.patch("/logout", userc.logout);
+router.post("/login/wg", userc.loginWg);
+
+router.post("/register/wg/:wgId", userc.registerWg);
+
+router.post("/logout", userc.logout);
 
 module.exports = router;
