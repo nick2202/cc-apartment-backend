@@ -3,6 +3,10 @@ const MatchingKriterien = require("./matching_kriterien.model");
 const Mitbewohner = require("./mitbewohner.model");
 
 const WgSchema = mongoose.Schema({
+        userId: {
+            type: String,
+            default: 1
+        },
         strasse: {
             type: String,
             required: true

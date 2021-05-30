@@ -25,6 +25,7 @@ exports.createMatchingKriterienWg = (async (req, res, next) => {
             {_id: req.params.wgId},
             {matchingKriterien: matchingKriterien}
         );
+        console.log(req.body)
         // res.locals.kriterien = "MatchingKriterien created successfully!";
         // next();
         res.json(savedWg);
@@ -40,6 +41,8 @@ exports.updateMatchingKriterienBew = (async (req, res, next) => {
         let mk;
         mk = await bewerber.matchingKriterien[0];
         await mk.set(req.body);
+        console.log(req.body)
+        console.log(mk)
         bewerber.save();
         res.locals.kriterien = "MatchingKriterien updated successfully!";
         next();

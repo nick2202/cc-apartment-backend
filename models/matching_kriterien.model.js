@@ -61,7 +61,7 @@ const MatchingKriterienSchema = mongoose.Schema({
             kultur: {
                 type: Number,
             },
-            naturwisschenschaften: {
+            naturwissenschaften: {
                 type: Number,
             },
             technik: {

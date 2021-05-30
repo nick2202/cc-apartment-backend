@@ -2,11 +2,7 @@ Git -> Clone Project -> $npm install -> $npm start
 
 create config/.env in root dir and set Port and MongoDB authentication
 
-
-
 Example request (POST Bewerber MatchingKriterien):
-
-
 ```yaml
 {
     "geschlecht": [
@@ -39,7 +35,7 @@ Example request (POST Bewerber MatchingKriterien):
     "interessen": [{
         "politik": 1,
         "kultur": 1,
-        "naturwisschenschaften": 1,
+        "naturwissenschaften": 1,
         "technik": 1,
         "sport": 1
     }]

@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 const MatchingKriterien = require("./matching_kriterien.model");
 
 const BewerberSchema = mongoose.Schema({
+        userId: {
+            type: String
+        },
         vorname: {
             type: String,
             required: true

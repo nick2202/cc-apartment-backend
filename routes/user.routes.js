@@ -1,12 +1,16 @@
 const express = require("express");
 const router = express();
+const checkAuth = require("../middleware/check-auth")
 
-const userc = require("../controllers/user.controller");
+const user = require("../controllers/user.controller");
 
-router.patch("/login", userc.login);
+router.post("/login", user.login);
 
-router.patch("/register", userc.register);
+router.post("/register", user.register);
 
-router.patch("/logout", userc.logout);
+router.post("/logout", user.logout);
+
+// Check authorization
+router.get("/auth", checkAuth, user.getAuth);
 
 module.exports = router;

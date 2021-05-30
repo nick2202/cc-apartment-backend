@@ -7,7 +7,7 @@ const MatchingKriterien = require("../models/matching_kriterien.model");
 exports.doMatchingBew = (async (req, res) => {
     try {
         let bew;
-        bew = await Bewerber.findById(req.params.bewerberId);
+        bew = await Bewerber.findById(req.profileId);
         let oldMatches;
         oldMatches = await Match.deleteMany({bewerber: bew._id});
         let wgs;
@@ -25,7 +25,7 @@ exports.doMatchingBew = (async (req, res) => {
             "matchingKriterien.politischeGesinnung": bew.matchingKriterien[0].politischeGesinnung[0]
         });
         await calcFaktor(bew, wgs, "bewerber", "wg")
-        res.json(res.locals.kriterien + "   Number of matches: " + wgs.length);
+        res.json("Number of matches: " + wgs.length);
     } catch (err) {
         res.json({message: err});
     }
@@ -34,7 +34,7 @@ exports.doMatchingBew = (async (req, res) => {
 exports.doMatchingWg = async (req, res) => {
     try {
         let wg;
-        wg = await Wg.findById(req.params.wgId);
+        wg = await Wg.findById(req.profileId);
         let oldMatches;
         oldMatches = await Match.deleteMany({wg: wg._id});
         let bews;
@@ -51,7 +51,7 @@ exports.doMatchingWg = async (req, res) => {
             "matchingKriterien.politischeGesinnung": {$in: wg.matchingKriterien[0].politischeGesinnung}
         });
         await calcFaktor(wg, bews, "wg", "bewerber");
-        res.json(res.locals.kriterien + "   Number of matches: " + bews.length);
+        res.json("Number of matches: " + bews.length);
     } catch (err) {
         res.json({message: err});
     }
@@ -59,7 +59,7 @@ exports.doMatchingWg = async (req, res) => {
 
 exports.getMatchesBew = async (req, res) => {
     try {
-        const matches = await Match.find({bewerber: req.params.bewerberId});
+        const matches = await Match.find({bewerber: req.profileId});
         res.json(matches);
     } catch (err) {
         res.json({message: err});
@@ -68,7 +68,7 @@ exports.getMatchesBew = async (req, res) => {
 
 exports.getMatchesWg = async (req, res) => {
     try {
-        const matches = await Match.find({wg: req.params.wgId});
+        const matches = await Match.find({wg: req.profileId});
         res.json(matches);
     } catch (err) {
         res.json({message: err});
@@ -78,7 +78,7 @@ exports.getMatchesWg = async (req, res) => {
 exports.getMatchingBewWg = async (req, res) => {
     try {
         var matches;
-        matches = await Match.find({wg: req.params.wgId});
+        matches = await Match.find({wg: req.profileId});
         var matchIds = [];
         await matches.forEach(e => {
             matchIds.push(e.bewerber)
@@ -110,7 +110,7 @@ const calcFaktor = (entity, listWithMatches, keyEntity, keyListWithMatches) => {
         let sumInteressen =
             Math.abs(entity.matchingKriterien[0].interessen[0].politik - listWithMatches[i].matchingKriterien[0].interessen[0].politik) +
             Math.abs(entity.matchingKriterien[0].interessen[0].kultur - listWithMatches[i].matchingKriterien[0].interessen[0].kultur) +
-            Math.abs(entity.matchingKriterien[0].interessen[0].naturwisschenschaften - listWithMatches[i].matchingKriterien[0].interessen[0].naturwisschenschaften) +
+            Math.abs(entity.matchingKriterien[0].interessen[0].naturwissenschaften - listWithMatches[i].matchingKriterien[0].interessen[0].naturwissenschaften) +
             Math.abs(entity.matchingKriterien[0].interessen[0].technik - listWithMatches[i].matchingKriterien[0].interessen[0].technik) +
             Math.abs(entity.matchingKriterien[0].interessen[0].sport - listWithMatches[i].matchingKriterien[0].interessen[0].sport);
 
@@ -122,4 +122,4 @@ const calcFaktor = (entity, listWithMatches, keyEntity, keyListWithMatches) => {
         });
         const savedMatch = match.save();
     }
-}
+};
