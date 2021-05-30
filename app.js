@@ -10,6 +10,7 @@ app.use(cors({origin: "*"}));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
+
 app.get("/", (req, res) => {
     res.status(200).json({message: "Home"});
 });
@@ -25,7 +26,6 @@ app.use("/wg", wgRoute);
 app.use("/kriterien", kriterienRoute);
 app.use("/match", matchRoute);
 app.use("/user", userRoute);
-
 
 mongoose.connect(
     ENV.DB_CONNECTION,

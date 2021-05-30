@@ -7,7 +7,7 @@ const MatchingKriterien = require("../models/matching_kriterien.model");
 exports.doMatchingBew = (async (req, res) => {
     try {
         let bew;
-        bew = await Bewerber.findById(req.params.bewerberId);
+        bew = await Bewerber.findById(req.profileId);
         let oldMatches;
         oldMatches = await Match.deleteMany({bewerber: bew._id});
         let wgs;
@@ -34,7 +34,7 @@ exports.doMatchingBew = (async (req, res) => {
 exports.doMatchingWg = async (req, res) => {
     try {
         let wg;
-        wg = await Wg.findById(req.params.wgId);
+        wg = await Wg.findById(req.profileId);
         let oldMatches;
         oldMatches = await Match.deleteMany({wg: wg._id});
         let bews;
@@ -59,7 +59,7 @@ exports.doMatchingWg = async (req, res) => {
 
 exports.getMatchesBew = async (req, res) => {
     try {
-        const matches = await Match.find({bewerber: req.params.bewerberId});
+        const matches = await Match.find({bewerber: req.profileId});
         res.json(matches);
     } catch (err) {
         res.json({message: err});
@@ -68,7 +68,7 @@ exports.getMatchesBew = async (req, res) => {
 
 exports.getMatchesWg = async (req, res) => {
     try {
-        const matches = await Match.find({wg: req.params.wgId});
+        const matches = await Match.find({wg: req.profileId});
         res.json(matches);
     } catch (err) {
         res.json({message: err});
@@ -78,7 +78,7 @@ exports.getMatchesWg = async (req, res) => {
 exports.getMatchingBewWg = async (req, res) => {
     try {
         var matches;
-        matches = await Match.find({wg: req.params.wgId});
+        matches = await Match.find({wg: req.profileId});
         var matchIds = [];
         await matches.forEach(e => {
             matchIds.push(e.bewerber)

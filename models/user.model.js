@@ -9,8 +9,13 @@ const UserSchema = mongoose.Schema({
             type: String,
             required: true
         },
+        profileId: {
+            type: String,
+            required: true
+        },
         type: {
             type: String,
+            required: true
         }
     },
     {

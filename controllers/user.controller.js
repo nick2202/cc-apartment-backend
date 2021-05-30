@@ -1,100 +1,84 @@
-const Userm = require("../models/user.model");
+const User = require("../models/user.model");
 const Wg = require("../models/wg.model");
 const Bewerber = require("../models/bewerber.model");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require("dotenv").config({path: "config/.env"});
+const ENV = process.env;
 
-const Realm = require("realm");
-const app = new Realm.App({ id: "cc-apartment-cgfxu" });
-
-exports.registerBewerber = (async (req, res) => {
+exports.register = (async (req, res) => {
+    let user = new User(req.body);
     try {
-        console.log("aa")
-        const userm = new Userm(req.body);
-        console.log(userm)
-        await app.emailPasswordAuth.registerUser(userm.email, userm.password);
-
-        const updatedWg = await Bewerber.updateOne(
-            {_id: req.params.wgId},
-            {userId: userm._id}
-        );
-
-        res.json(userm);
+        const countEmail = await User.countDocuments({email: user.email});
+        if (countEmail > 0) {
+            res.status(422).json({message: "Mail already exists!"});
+        }
+        const isBewerber = await Bewerber.countDocuments({_id: user.profileId});
+        const isWg = await Wg.countDocuments({_id: user.profileId});
+        if (isBewerber > 0) {
+            user.type = "bewerber";
+        } else if (isWg > 0) {
+            user.type = "wg";
+        } else {
+            res.status(422).json({message: "No associated Bewerber or WG exists, create one first by starting the registration process!"});
+        }
+        user.password = await bcrypt.hash(user.password, 10);
+        const savedUser = await user.save();
+        res.json(savedUser);
     } catch (err) {
         res.json({message: err});
     }
 });
 
-exports.registerWg = (async (req, res) => {
+exports.login = (async (req, res) => {
     try {
-        console.log("aa")
-        const userm = new Userm(req.body);
-        console.log(userm)
-        console.log(req.params.wgId)
-        const registeredUser = await app.emailPasswordAuth.registerUser(userm.email, userm.password);
-        const credentials = Realm.Credentials.emailPassword(userm.email, userm.password);
-        const loggedInUser = await app.logIn(credentials);
-        const id = app.currentUser.id;
-
-        const updatedWg = await Wg.updateOne(
-            {_id: req.params.wgId},
-            {userId: id}
-        );
-        res.json({
-            user: id,
-            wgId: req.params.wgId,
-            updatedWg: updatedWg
+        const user = await User.find({email: req.body.email});
+        console.log(user[0].password)
+        if (user == null) {
+            return res.status(400).json({message: "No user found with given e-mail"})
+        }
+        console.log(user[0]._id)
+        bcrypt.compare(req.body.password, user[0].password, (err, result) => {
+            if(result) {
+                const token = jwt.sign(
+                    {
+                        userid: user[0]._id
+                    },
+                    ENV.SECRET,
+                    {
+                        expiresIn: "1h"
+                    }
+                );
+                res.status(200).json({
+                    message: "Auth successful",
+                    token: token
+                });
+            } else {
+                res.status(401).json({
+                    message: "Auth failed"
+                });
+            }
         });
     } catch (err) {
         res.json({message: err});
     }
 });
 
-exports.loginBewerber = (async (req,res) => {
+
+exports.logout = (async (req, res) => {
     try {
-        const userm = new Userm(req.body);
-
-        const credentials = Realm.Credentials.emailPassword(userm.email, userm.password);
-        const user = await app.logIn(credentials);
-        const token = app.currentUser.accessToken;
-        console.log(token)
-        const bew = await Bewerber.find({userId: userId})
-        console.log(bew._id)
-            Realm.
-
-        res.json({token: token});
-    } catch (err) {
-        res.json({message: err});
-    }
-});
-
-exports.loginWg = (async (req,res) => {
-    try {
-        const userm = new Userm(req.body);
-
-        const credentials = Realm.Credentials.emailPassword(userm.email, userm.password);
-        const user = await app.logIn(credentials);
-        const userId = app.currentUser.id
-        const token = app.currentUser.accessToken;
-        console.log(token)
-        console.log(userId)
-        const wg = await Wg.find({userId: userId})
-        console.log(wg._id)
-
-        res.json({token: token});
-    } catch (err) {
-        res.json({message: err});
-    }
-});
-
-
-
-exports.logout = (async(req,res) => {
-    try {
-        await app.currentUser.logOut();
+        await req.session.destroy
         res.json("SUCC");
     } catch (err) {
         res.json(err.message);
     }
 });
+
+exports.getAuth = (req, res) => {
+    res.status(200).json({
+        message: "Valid token"
+    });
+};
 
 
 
