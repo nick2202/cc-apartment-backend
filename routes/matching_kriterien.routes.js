@@ -7,16 +7,13 @@ const match = require("../controllers/match.controller");
 router.post("/bewerber/:bewerberId", matchingKriterien.createMatchingKriterienBew);
 
 //Update MatchingKriterien of a Bewerber and initiate matching
-router.patch("/bewerber/:bewerberId", matchingKriterien.updateMatchingKriterienBew, match.doMatchingBew);
+router.patch("/bewerber/:bewerberId", matchingKriterien.updateMatchingKriterienBew);
 
 //Create MatchingKriterien of a WG and initiate matching
 router.post("/wg/:wgId", matchingKriterien.createMatchingKriterienWg);
 
 //Update MatchingKriterien of a WG and initiate matching
 router.patch("/wg/:wgId", matchingKriterien.updateMatchingKriterienWg);
-
-//dev
-router.post("/matches/:bewerberId", match.doMatchingBew);
 
 
 module.exports = router;

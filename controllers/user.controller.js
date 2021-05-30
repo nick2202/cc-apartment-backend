@@ -13,6 +13,10 @@ exports.register = (async (req, res) => {
         if (countEmail > 0) {
             res.status(422).json({message: "Mail already exists!"});
         }
+        const countUser = await User.countDocuments({profileId: user.profileId});
+        if (countUser > 0) {
+            res.status(422).json({message: "User already exists!"});
+        }
         const isBewerber = await Bewerber.countDocuments({_id: user.profileId});
         const isWg = await Wg.countDocuments({_id: user.profileId});
         if (isBewerber > 0) {
@@ -23,6 +27,7 @@ exports.register = (async (req, res) => {
             res.status(422).json({message: "No associated Bewerber or WG exists, create one first by starting the registration process!"});
         }
         user.password = await bcrypt.hash(user.password, 10);
+        console.log("user registriert")
         const savedUser = await user.save();
         res.json(savedUser);
     } catch (err) {
