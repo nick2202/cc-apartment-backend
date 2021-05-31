@@ -37,7 +37,7 @@ exports.register = (async (req, res) => {
 exports.login = (async (req, res) => {
     try {
         const user = await User.find({email: req.body.email});
-        if (user == null) {
+        if (user.length < 1) {
             return res.status(400).json({message: "No user found with given e-mail"})
         }
         bcrypt.compare(req.body.password, user[0].password, (err, result) => {
