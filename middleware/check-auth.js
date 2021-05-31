@@ -20,10 +20,7 @@ module.exports = async (req, res, next) => {
                 profile = await Bewerber.findById(user.profileId);
             } else {
                 profile = await Wg.findById(user.profileId);
-                console.log("wg")
             }
-            console.log("auth succ")
-            console.log(profile._id)
             req.profileId = profile._id
             req.userToken = decoded;
             next();

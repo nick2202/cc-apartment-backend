@@ -83,8 +83,6 @@ exports.getMatchingBewWg = async (req, res) => {
         await matches.forEach(e => {
             matchIds.push(e.bewerber)
         })
-        console.log(matches)
-        console.log(matchIds)
         const bews = await Bewerber.find({"_id": {$in: matchIds}})
         res.json(bews);
     } catch (err) {
