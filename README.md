@@ -7,13 +7,13 @@ Eine Wohnungsbörse, wo sich Suchende und Anbieter über einen Matching Algorith
 3. Klonen in gewünschtes Verzeichnis:
     1. $ git clone https://github.com/nick2202/cc-apartment-backend.git
     2. $ git clone https://github.com/nick2202/cc-apartment-frontend.git
-4. Temporäre .env-Datei mit Variablen erstellen (benötigt für Verbindung zu unserem MongoDB-Cluster + Port + JWT-Secret (Standardwerte können für Dev-Umgebung benutzt werden)):
+4. Temporäre .env-Datei mit Variablen erstellen (benötigt für Verbindung zu MongoDB-Cluster + Port + JWT-Secret):
     1. $ cd cc-apartment-backend
     2. $ mkdir config
     3. $ cd config
-    4. $ echo <url to your MongoDB> > a.env
-    5. $ echo PORT=<your backend port> >> a.env
-    6. $ echo SECRET=<your JWT secret> >> a.env
+    4. $ echo {url to your MongoDB} > a.env
+    5. $ echo PORT={your backend port} >> a.env
+    6. $ echo SECRET={your JWT secret} >> a.env
 5. Temporäre .env-Datei (a.env) zu UTF-8 konvertieren (kann sonst nicht gelesen werden):
     1. $ Get-Content a.env | Set-Content -Encoding utf8 .env
     2. $ del a.env
